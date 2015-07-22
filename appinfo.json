@@ -1,0 +1,28 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "shirai.la",
+    "longName": "sleepguid",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/char1.png",
+                "name": "SWORDBOY",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "sleepguide",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "25b08d2e-7649-4ecc-b1d2-ebab9be54049",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
