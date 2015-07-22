@@ -3,16 +3,24 @@
     "capabilities": [
         ""
     ],
-    "companyName": "takeru@shirai.la",
-    "longName": "SDK2",
+    "companyName": "shirai.la",
+    "longName": "sleepguid",
     "projectType": "native",
     "resources": {
-        "media": []
+        "media": [
+            {
+                "file": "images/char1.png",
+                "name": "SWORDBOY",
+                "type": "png"
+            }
+        ]
     },
-    "sdkVersion": "2",
-    "shortName": "SDK2",
-    "uuid": "584bdab1-5cd3-4d82-8677-a4d3f2035952",
-    "versionCode": 1,
+    "sdkVersion": "3",
+    "shortName": "sleepguide",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "25b08d2e-7649-4ecc-b1d2-ebab9be54049",
     "versionLabel": "1.0",
     "watchapp": {
         "watchface": false
