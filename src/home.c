@@ -1,36 +1,16 @@
-#include"home.h"
 #include <pebble.h>
+#include "home.h"
 #include "time.h"
 static Window *mainwindow;
 static TextLayer *timetext,*leveltext,*border;
 static BitmapLayer *imagelayer;
 static GBitmap *imagebitmap;
 
-#define  NUM_LEVEL_PKEY 1
-// You can define defaults for values in persistent storage
+//レベルを設定する　読み込み＆セーブ
+#define  NUM_LEVEL_PKEY 0
 #define NUM_LEVEL_DEFAULT 0
-static int lv = NUM_LEVEL_DEFAULT;
-
-// static void up_click_handler(ClickRecognizerRef recognizer, void *context) {// 上ボタンが押されたら
-//   APP_LOG(APP_LOG_LEVEL_INFO, "Up pressed!");
-//   APP_LOG(APP_LOG_LEVEL_INFO, "%d",lv);
-// }
-// static void select_click_handler(ClickRecognizerRef recognizer, void *context) {//決定ボタンが押されたら
-//   APP_LOG(APP_LOG_LEVEL_INFO, "Select pressed!");
-// }
-// static void down_click_handler(ClickRecognizerRef recognizer, void *context) {//下ボタンがおされたら
-//   APP_LOG(APP_LOG_LEVEL_INFO, "Down pressed!");
-//   lv--;
-//   APP_LOG(APP_LOG_LEVEL_INFO, "%d",lv);
-  
-// }
-
-// static void click_config_provider(void *context) {//ボタンを押されたときのプロバイダー
-//   // Register the ClickHandlers　クリックハンドラーを登録
-//   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
-//   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
-//   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
-// }
+//static int lv = NUM_LEVEL_DEFAULT;
+static int lv = NUM_LEVEL_PKEY;
 
 
 static void update_time(){
@@ -57,10 +37,12 @@ static void update_level(){//レベルを書き換える
   lv = persist_exists(NUM_LEVEL_PKEY) ? persist_read_int(NUM_LEVEL_PKEY) : NUM_LEVEL_DEFAULT;
   
   static char levelbody[18];
+  //snprintf(s_body_text, sizeof(s_body_text), "%u Bottles", s_num_drinks);
   snprintf(levelbody, sizeof(levelbody), "Lv.%d", lv);
   text_layer_set_text(leveltext, levelbody);
 }
 /////////////////////////////////////////////////////////////////////
+
 static void window_load(Window *window){
   //キャラクター描画
 imagebitmap = gbitmap_create_with_resource(RESOURCE_ID_SWORDBOY);
@@ -132,6 +114,14 @@ void homewindow_push() {
     });
   }
   window_stack_push(mainwindow, true);
+  
+  lv = persist_exists(NUM_LEVEL_PKEY) ? persist_read_int(NUM_LEVEL_PKEY) : NUM_LEVEL_DEFAULT;
+  lv=  persist_read_int(NUM_LEVEL_PKEY);
+  //lv = NUM_LEVEL_PKEY;
+  //lvはストレージ内のNUM_LEVEL_PKEYとします
+  //lv=  persist_read_int(NUM_LEVEL_PKEY);
+  
+  APP_LOG(APP_LOG_LEVEL_INFO, "lv = %d",lv);
   
     //ボタンが押されたときのコンフィグハンドラー ホームメニューデバッグ用
   //window_set_click_config_provider(mainwindow, click_config_provider);

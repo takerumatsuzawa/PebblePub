@@ -1,9 +1,9 @@
 #include <pebble.h>
 #include "bedwindow.h"
-#include "night.h"
 #include "wakewindow.h"
-  #include "home.h"
-  #define NUM_WINDOWS 3
+#include "home.h"
+  //スクロールメニューの数
+#define NUM_WINDOWS 3
   
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
@@ -35,6 +35,7 @@ static void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_
 //  return CHECKBOX_WINDOW_CELL_HEIGHT;
 // }
 static void select_callback(struct MenuLayer *menu_layer, MenuIndex *cell_index, void *context) {
+  //決められた画面に遷移するためのレイヤーを呼び出す
   switch(cell_index->row) {
     case 0:
       homewindow_push();
@@ -104,5 +105,4 @@ int main() {
   app_event_loop();
   deinit();
 }
-
 

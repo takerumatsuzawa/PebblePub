@@ -3,8 +3,8 @@
     "capabilities": [
         ""
     ],
-    "companyName": "shirai.la",
-    "longName": "sleepguid",
+    "companyName": "takeru@shirai.la",
+    "longName": "SLEEP-GUIDE",
     "projectType": "native",
     "resources": {
         "media": [
@@ -16,11 +16,8 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "sleepguide",
-    "targetPlatforms": [
-        "basalt"
-    ],
-    "uuid": "25b08d2e-7649-4ecc-b1d2-ebab9be54049",
+    "shortName": "SLEEP-GUIDE",
+    "uuid": "40fd13eb-86ac-41ea-843d-7067a01fd425",
     "versionLabel": "1.0",
     "watchapp": {
         "watchface": false
