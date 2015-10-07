@@ -40,7 +40,7 @@ static void update_time(){
     
   //ここで起きるべき時刻にメッセージを表示　数字を変えれば表示される時刻が変更される
   //デバッグ用
-    if(tick_time->tm_hour==18){
+    if(tick_time->tm_hour==20){
       text_layer_set_text(nowtime,"Wake up!");
       woke=true;
     }else{
@@ -49,54 +49,68 @@ static void update_time(){
     }
   //デバッグ用ここまで
   
+  //bedtimeで決めた時間によって起きる時間を決める
 //  switch(bedtime){
 //   case 0:
 //   if(tick_time->tm_hour==4){}
 //     text_layer_set_text(waketime,"wake at 04:00");
+//     woke=true;
 //     break;
 //     case 1:
 //   if((tick_time->tm_hour==4&&tick_time->tm_min>30) ||tick_time->tm_hour==5&&tick_time->tm_min<30){}
 //     text_layer_set_text(waketime,"wake at 04:30");
+//     woke=true;
 //     break;
 //     case 2:
 //   if(tick_time->tm_hour==5){}
 //     text_layer_set_text(waketime,"wake at 05:00");
+//     woke=true;
 //     break;
 //     case 3:
 //   if((tick_time->tm_hour==5&&tick_time->tm_min>30) ||tick_time->tm_hour==6&&tick_time->tm_min<30){}
 //     text_layer_set_text(waketime,"wake at 05:30");
+//     woke=true;
 //     break;
 //     case 4:
 //   if(tick_time->tm_hour==6){}
 //     text_layer_set_text(waketime,"wake at 06:00");
+//     woke=true;
 //     break;
 //     case 5:
 //   if((tick_time->tm_hour==6&&tick_time->tm_min>30) ||tick_time->tm_hour==7&&tick_time->tm_min<30){}
 //     text_layer_set_text(waketime,"wake at 06:30");
+//     woke=true;
 //     break;
 //     case 6:
 //   if(tick_time->tm_hour==7){}
 //     text_layer_set_text(waketime,"wake at 07:00");
+//     woke=true;
 //     break;
 //     case 7:
 //   if((tick_time->tm_hour==7&&tick_time->tm_min>30) ||tick_time->tm_hour==8&&tick_time->tm_min<30){}
 //     text_layer_set_text(waketime,"wake at 07:30");
+//     woke=true;
 //     break;
 //       case 8:
 //   if(tick_time->tm_hour==8){}
 //     text_layer_set_text(waketime,"wake at 08:00");
+//     woke=true;
 //     break;
 //       case 9:
 //   if((tick_time->tm_hour==8&&tick_time->tm_min>30) ||tick_time->tm_hour==9&&tick_time->tm_min<30){}
 //     text_layer_set_text(waketime,"wake at 08:30");
+//     woke=true;
 //     break;
 //       case 10:
 //   if(tick_time->tm_hour==9){}
 //     text_layer_set_text(waketime,"wake at 09:00");
+//     woke=true;
 //     break;
 //     default:
+//     woke=false;
 //     break;
 //    }
+  //条件ここまで
  }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
@@ -106,19 +120,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void window_load(){
-   //waketextを作成
-//   waketext=text_layer_create(GRect(0, 0, 150, 40));//x,y,w,h　ｘ、ｙ＝（０，０）は左上 ラベルの四角の左上の座標を指定、横幅縦幅をきめる ウインドウの横は150が最大 縦は130？が最大
-//   text_layer_set_background_color(waketext,GColorClear);
-//   text_layer_set_text(waketext,"Let's wake up at");
-  
-//   //ウォッチっぽくなるようにレイアウトを改善
-//   text_layer_set_font(waketext,fonts_get_system_font(FONT_KEY_GOTHIC_24));
-//   text_layer_set_text_alignment(waketext,GTextAlignmentCenter);
-  
-//   //レイヤーをウインドウの子に加える
-//   layer_add_child(window_get_root_layer(wakewindow),text_layer_get_layer(waketext));
-    
+static void window_load(){    
   //waketimeを作成
   waketime=text_layer_create(GRect(0, 40, 150, 40));//x,y,w,h　ｘ、ｙ＝（０，０）は左上 ラベルの四角の左上の座標を指定、横幅縦幅をきめる ウインドウの横は150が最大 縦は130？が最大
   text_layer_set_background_color(waketime,GColorClear);
@@ -134,8 +136,9 @@ static void window_load(){
   //Get the count from persistent storage for use if it exists, otherwise use the default ローカル保存を呼び出し
   //bedtimeを呼び出します
   bedtime = persist_exists(NUM_BEDTIME_PKEY) ? persist_read_int(NUM_BEDTIME_PKEY) : NUM_BEDTIME_DEFAULT;
+  //ログにてbedtimeを確認
   APP_LOG(APP_LOG_LEVEL_INFO, "%d",bedtime);
-  //update_waketime();
+  
   switch(bedtime){
       case 0:
     text_layer_set_text(waketime,"wake at 04:00");
@@ -177,7 +180,7 @@ static void window_load(){
   //nowtimeを作成
   nowtime=text_layer_create(GRect(0, 80, 150, 40));//x,y,w,h　ｘ、ｙ＝（０，０）は左上 ラベルの四角の左上の座標を指定、横幅縦幅をきめる ウインドウの横は150が最大 縦は130？が最大
   text_layer_set_background_color(nowtime,GColorClear);
-  text_layer_set_text(nowtime,"wake?");
+  text_layer_set_text(nowtime,"nowtime");
   
   //ウォッチっぽくなるようにレイアウトを改善
   text_layer_set_font(nowtime,fonts_get_system_font(FONT_KEY_GOTHIC_28));
@@ -206,26 +209,22 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {// �
   APP_LOG(APP_LOG_LEVEL_INFO, "Up pressed!");
   //test↓/////////////////////デバッグ用（デモ用）上ボタンを押すだけで、レベルがプラス１されるとする
   //lv=NUM_LEVEL_PKEY;
-    
-//     lv++;
-//     APP_LOG(APP_LOG_LEVEL_INFO, "level= %d",lv);
-  
+  //     lv++;
+  //     APP_LOG(APP_LOG_LEVEL_INFO, "level= %d",lv);
   //test↑/////////////////////
-  
   //PEBBLEをバイブレーションさせる
   //vibes_long_pulse();
   
   // Vibe pattern: ON for 200ms, OFF for 100ms, ON for 400ms:
-//   static const uint32_t segments[] ={ 
-//   200 , 100 , 400 , 200,
-//   200 , 100 , 400 , 200,
-//   200 , 100 , 400 , 200};
-
-//   VibePattern pat = {
-//    . durations = segments ,
-//    . num_segments = ARRAY_LENGTH ( segments ),
-//  };
-//   vibes_enqueue_custom_pattern(pat);
+  //   static const uint32_t segments[] ={ 
+  //   200 , 100 , 400 , 200,
+  //   200 , 100 , 400 , 200,
+  //   200 , 100 , 400 , 200};
+  //   VibePattern pat = {
+  //    . durations = segments ,
+  //    . num_segments = ARRAY_LENGTH ( segments ),
+  //  };
+  //   vibes_enqueue_custom_pattern(pat);
   //バイブレーション　ここまで
   
   }
@@ -233,22 +232,29 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {// �
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {//決定ボタンが押されたら
   APP_LOG(APP_LOG_LEVEL_INFO, "Select pressed!");
   
+  //起きるべき時間になった（woke==true）のとき、決定ボタンが押されたら
   if(woke==true){
-  // Get the count from persistent storage for use if it exists, otherwise use the default ローカル保存を呼び出し
-  //lvを読み込みます
-  //lv = persist_exists(NUM_LEVEL_PKEY) ? persist_read_int(NUM_LEVEL_PKEY) : NUM_LEVEL_DEFAULT;
+    //lvを読み込みます
+    //lv = persist_exists(NUM_LEVEL_PKEY) ? persist_read_int(NUM_LEVEL_PKEY) : NUM_LEVEL_DEFAULT;
     lv=NUM_LEVEL_PKEY;
+    //起きるべき時間に決定ボタンが押されるとCongrats-morning!!が表示される
     text_layer_set_text(grats,"Congrats-morning!!");
-   ///APP_LOG(APP_LOG_LEVEL_INFO, "Level Up upper false");
+    //レベルがひとつ上がる
     lv++;
     APP_LOG(APP_LOG_LEVEL_INFO, "level= %d",lv);
-     // Save the count into persistent storage on app exit　ここで　ローカル保存
-  persist_write_int(NUM_LEVEL_PKEY, lv);
+     // Save the count into persistent storage on app exit　ローカル保存
+    persist_write_int(NUM_LEVEL_PKEY, lv);
   }
+  
+  //1007松澤　ここから　新たなウインドウで感覚運動遊びをさせる
+  //window_stack_push(s_countdown_window, false);
+  //ここまで
 }
+
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {//下ボタンがおされたら
   APP_LOG(APP_LOG_LEVEL_INFO, "Down pressed!");
 }
+
 static void click_config_provider(void *context) {//ボタンを押されたときのプロバイダー
   // Register the ClickHandlers　クリックハンドラーを登録
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
@@ -256,12 +262,12 @@ static void click_config_provider(void *context) {//ボタンを押されたと�
   window_single_click_subscribe(BUTTON_ID_DOWN, down_click_handler);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-static void window_unload(){
-  //text_layer_destroy(waketext); 
+
+static void window_unload(){ 
   text_layer_destroy(waketime); 
   text_layer_destroy(nowtime);
   text_layer_destroy(grats);
- wakewindow=NULL;
+  wakewindow=NULL;
   
   //閉じられる時にレベルを保存
   persist_write_int(NUM_LEVEL_PKEY, lv);
@@ -276,13 +282,12 @@ void wake_push() {
         .load = window_load,
         .unload = window_unload,
     });
+    //ログにてbedtimeを確認
     APP_LOG(APP_LOG_LEVEL_INFO, "bedtime= %d",bedtime);
   }
   
   window_stack_push(wakewindow, true);
-  //APP_LOG(APP_LOG_LEVEL_INFO, "Upper true");
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
   //ボタンが押されたときのコンフィグハンドラー
   window_set_click_config_provider(wakewindow, click_config_provider);
-  //upper=true;
 }

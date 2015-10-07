@@ -4,7 +4,7 @@
         ""
     ],
     "companyName": "takeru@shirai.la",
-    "longName": "SLEEP-GUIDE",
+    "longName": "SLEEPGUIDE-B",
     "projectType": "native",
     "resources": {
         "media": [
@@ -16,7 +16,11 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "SLEEP-GUIDE",
+    "shortName": "SLEEPGUIDE-B",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
     "uuid": "40fd13eb-86ac-41ea-843d-7067a01fd425",
     "versionLabel": "1.0",
     "watchapp": {

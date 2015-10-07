@@ -2,8 +2,9 @@
 #include "bedwindow.h"
 #include "wakewindow.h"
 #include "home.h"
+#include "awake.h"
   //スクロールメニューの数
-#define NUM_WINDOWS 3
+#define NUM_WINDOWS 4
   
 static Window *s_main_window;
 static MenuLayer *s_menu_layer;
@@ -23,9 +24,9 @@ static void draw_row_callback(GContext *ctx, Layer *cell_layer, MenuIndex *cell_
     case 2:
       menu_cell_basic_draw(ctx, cell_layer, "wakewindow", NULL, NULL);
       break;
-//     case 3:
-//       menu_cell_basic_draw(ctx, cell_layer, "wakewindow", NULL, NULL);
-//       break;
+    case 3:
+      menu_cell_basic_draw(ctx, cell_layer, "awake-move", NULL, NULL);
+      break;
     default:
       break;
   }
